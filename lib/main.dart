@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                         Icons.arrow_forward_ios,
                         color: Colors.white,
                       ),
-                      tileColor: Global.music[i]['color'],
+                      tileColor: Colors.primaries[i % 18],
                       onTap: () {
                         Navigator.of(context)
                             .pushNamed('song', arguments: Global.music[i]);

@@ -8,15 +8,23 @@ class Songs extends StatefulWidget {
   State<Songs> createState() => _SongsState();
 }
 
-class _SongsState extends State<Songs> {
+class _SongsState extends State<Songs> with TickerProviderStateMixin {
   final assetAudioPlayer = AssetsAudioPlayer();
+  AnimationController? musicController;
 
   bool stat = true;
+  @override
+  void initState() {
+    super.initState();
+    musicController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
+  }
 
   @override
   void dispose() {
     super.dispose();
     assetAudioPlayer.dispose();
+    musicController!.dispose();
   }
 
   @override
@@ -84,22 +92,28 @@ class _SongsState extends State<Songs> {
                           Icons.stop,
                           color: Colors.white,
                         )),
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            stat = !stat;
-                            assetAudioPlayer.play();
-                          });
-                        },
-                        icon: (stat == true)
-                            ? const Icon(
-                                Icons.pause,
+                    StreamBuilder(
+                        stream: assetAudioPlayer.isPlaying,
+                        builder: (cnt, snp) {
+                          if (snp.data!) {
+                            musicController!.forward();
+                          }
+                          return IconButton(
+                              onPressed: () {
+                                if (snp.data!) {
+                                  assetAudioPlayer.pause();
+                                  musicController!.reverse();
+                                } else {
+                                  assetAudioPlayer.play();
+                                  musicController!.forward();
+                                }
+                              },
+                              icon: AnimatedIcon(
+                                icon: AnimatedIcons.play_pause,
+                                progress: musicController!,
                                 color: Colors.white,
-                              )
-                            : const Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                              )),
+                              ));
+                        }),
                     IconButton(
                         onPressed: () {},
                         icon: const Icon(
