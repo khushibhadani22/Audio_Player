@@ -26,55 +26,57 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                "RAINBOW MUSIC",
-                style: TextStyle(color: Colors.white, fontSize: 25),
-              ),
-              centerTitle: true,
-              backgroundColor: Colors.black,
-            ),
-            body: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: Global.music.length,
-              itemBuilder: (context, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(19)),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(19)),
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            AssetImage("${Global.music[i]['image']}"),
-                      ),
-                      title: Text(
-                        "${Global.music[i]['title']}",
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "${Global.music[i]['subtitle']}",
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                      ),
-                      tileColor: Colors.primaries[i % 18],
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed('song', arguments: Global.music[i]);
-                      },
-                    ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "RAINBOW MUSIC",
+            style: TextStyle(color: Colors.white, fontSize: 25),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        body: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: Global.music.length,
+          itemBuilder: (context, i) {
+            return Padding(
+              padding: const EdgeInsets.all(2),
+              child: Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(19)),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(19)),
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage("${Global.music[i]['image']}"),
                   ),
-                );
-              },
-            )));
+                  title: Text(
+                    "${Global.music[i]['title']}",
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    "${Global.music[i]['subtitle']}",
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.black,
+                  ),
+                  tileColor: Colors.primaries[i % 18].shade200,
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed('song', arguments: Global.music[i]);
+                  },
+                ),
+              ),
+            );
+          },
+        ),
+        backgroundColor: Colors.black,
+      ),
+    );
   }
 }
